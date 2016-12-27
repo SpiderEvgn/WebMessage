@@ -1,0 +1,18 @@
+
+table.table.table-striped.table-hover
+  thead
+    tr
+      th 联系人编号
+      th 联系人邮箱
+      th 联系人用户名
+
+  tbody
+    - @contacts.each do |contact|
+      tr
+        td = contact.id
+        td = contact.email
+        td = contact.username
+
+        / td = link_to admin_contact_path(applicant), method: :delete, data: {confirm: 'Are you sure?'} do
+           = fa_icon "trash", class: "fa-fw"
+

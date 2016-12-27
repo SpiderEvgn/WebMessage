@@ -40,16 +40,18 @@ Things you may want to cover:
 - 用户可以删除自己发的消息
 
 ------------------------------------------------------------------------------------------
-Model：
-User, id, email, username, password, password_confirmation, contact_list[2,5,12,22]
-
+Model:
+User, id, email, username, password, password_confirmation
+Contact, user_id, contact_id, created_at
 Message, user_id, to_user_id, content, created_at
 
+user has_many contacts
+通过 contacts 表关联起一个 user 和他所有的 contacts
 
 user has_many messages
-一个 user a 能罗列他所有的联系人，当点击一个联系人 b 的时候获取他的 b.id，这时，检索 a.messages.where(to_user_id: b.id) 和 b.messages.where(to_user_id: a.id) 来获取 a <-> b 的所有聊天记录
+一个 user a 能罗列他所有的联系人，当点击一个联系人 b 的时候通过获取 b.contact_id，这时，检索 a.messages.where(to_user_id: b.id) 和 b.messages.where(to_user_id: a.id) 来获取 a <-> b 的所有聊天记录
 
-
+Views:
 1. 用户注册，登录后，进入 1_联系人列表界面_ （删除，选择）
 2. 联系人列表界面可以跳往 2_添加联系人界面_
 3. 点击联系人进入 3_聊天界面_  ，显示历史聊天记录，记录可删除
