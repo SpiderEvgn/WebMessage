@@ -41,6 +41,7 @@ gem 'slim-rails'
 gem 'devise'
 gem 'bower-rails'
 gem 'font-awesome-rails'
+gem 'paranoia'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
