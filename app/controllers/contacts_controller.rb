@@ -14,7 +14,8 @@ class ContactsController < ApplicationController
     # 先判断在不在历史删除的联系人列表
     contacts_deleted = current_user.contacts.only_deleted
     if contacts_deleted && contacts_deleted.map(&:contact_id).include?(contact_params[:contact_id].to_i)
-      Contact.restore(contact_params[:contact_id].to_i)
+      d_contact = Contact.only_deleted.find_by(user_id: current_user.id, contact_id: contact_params[:contact_id].to_i)
+      Contact.restore(d_contact.id)
       redirect_to user_contacts_url(current_user.access_token), notice: "New contact added successfully."
     else
       # 判断用户存不存在
