@@ -1,0 +1,25 @@
+doctype html
+html
+  head
+    title WebMessage
+    = csrf_meta_tags
+
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload' 
+  
+  body
+    nav.navbar.navbar-default
+      .container-fluid
+        .navbar-header
+          .navbar-brand WebMessage by Spider
+
+        .nav.navbar-nav.navbar-right
+          - if user_signed_in?
+            = link_to "| 注 销", destroy_user_session_path, method: :delete, data: { confirm: "确认退出？" }, class: "navbar-brand"
+
+    .container-fluid
+      .row
+        .col-lg-12
+          .panel.panel-default
+            .panel-body
+              = yield

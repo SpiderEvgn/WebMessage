@@ -7,12 +7,10 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 (1..9).each do |i|
-  eval <<-USER
-    User.create!(email:      "test0#{i}@webm.com",
-                 username:   "test0#{i}",
-                 password:   '111111'
-                 )
-  USER
+  User.create!(email:      "test0#{i}@webm.com",
+               username:   "test0#{i}",
+               password:   '111111'
+               )
 end
 
 User.first(5).each do |user|

@@ -1,7 +1,7 @@
 br
 .container
   .row
-    .col-xs-12.col-sm-12
+    .col-lg-4.col-lg-offset-4
       h3 登录
       = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
         = f.error_notification

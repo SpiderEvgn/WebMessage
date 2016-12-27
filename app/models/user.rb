@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   attr_accessor :login
-  # has_many :messages
-  has_many :contacts
+  has_many :messages
+  has_many :contacts, dependent: :destroy
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

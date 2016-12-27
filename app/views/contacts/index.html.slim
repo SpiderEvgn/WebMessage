@@ -1,4 +1,3 @@
-
 table.table.table-striped.table-hover
   thead
     tr
@@ -12,8 +11,7 @@ table.table.table-striped.table-hover
         td = contact.id
         td = contact.email
         td = contact.username
-        / td = link_to admin_contact_path(applicant), method: :delete, data: {confirm: 'Are you sure?'} do
-           = fa_icon "trash", class: "fa-fw"
+        td = link_to "删除", user_contact_path(current_user.access_token, contact), method: :delete, class: "btn btn-danger", data: {confirm: '确认删除？'}
 
-= link_to "新建联系人", user_new_contact_path(@user.access_token), class: "btn btn-primary"
+= link_to "新建联系人", user_new_contact_path(current_user.access_token), class: "btn btn-primary"
 
