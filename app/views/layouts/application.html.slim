@@ -11,19 +11,31 @@ html
     nav.navbar.navbar-default
       .container-fluid
         .navbar-header
-          .navbar-brand WebMessage by Spider
+          .navbar-brand WebMessage by Aaron Zhang
+        
+        ul.nav.navbar-nav.navbar-right
+          - if user_signed_in?
+            li.navbar-brand
+              = current_user.email
+            li
+              = link_to '前往联系人列表', contacts_path
+            li
+              hr
+            li
+              = link_to '注 销', destroy_user_session_path, method: :delete
 
-        .nav.navbar-nav.navbar-right
-          .navbar-brand
-            - if user_signed_in?
-              = current_user.username
-              '
-              |
-              = link_to "| 注 销", destroy_user_session_path, method: :delete
-
+    - if notice
+      .notice.alert.alert-success
+        = notice
+    - if alert
+      .alert.alert-danger
+        = alert
+        
     .container-fluid
       .row
         .col-lg-12
           .panel.panel-default
             .panel-body
               = yield
+
+

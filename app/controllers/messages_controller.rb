@@ -6,7 +6,7 @@ class MessagesController < ApplicationController
     messages_array = []
     current_user.messages.where(to_user_id: params[:contact_id]).each {|m| messages_array << m if m}
     @contact_user.messages.where(to_user_id: current_user.id).each {|m| messages_array << m if m}
-    # array -> relation for order
+    # 将 array 转换成 relation 用于时间排序
     messages_ids = messages_array.map(&:id)
     @messages = Message.includes(:user).where(id: messages_ids).order(:created_at)
 
@@ -19,16 +19,14 @@ class MessagesController < ApplicationController
 
     if @message.save
       redirect_to contact_messages_url(@contact_user)
-    # 保存失败的情况还有问题，继续调试
     else
-      debugger
-      render :index, alert: "消息不可为空！"
+      redirect_to contact_messages_url(@contact_user), alert: "消息不可为空！"
     end
   end
 
   def destroy
     @message.destroy
-    redirect_to contact_messages_url, notice: 'Message was successfully destroyed.'
+    redirect_to contact_messages_url
   end
 
   private

@@ -1,37 +1,29 @@
 .container-fluid
   .row
     .col-lg-12
-      .panel.panel-default
-        = @contact_user.username
-        .panel-body
+      .panel.panel-info
+        .panel-heading
+          h3.panel-title
+            = @contact_user.username
+        h4.panel-body
           - @messages.each do |m|
             / 要用页面的动态判断来调整 class
             - if m.user.id == current_user.id
-              span.pull-right
-                = m.created_at
-                |,
-                '
-                |
-                = m.user.username
-                |:
-                '
-                |
-                = m.content
-                '
-                |
-                = link_to '清除', contact_message_path(@contact_user, m), method: :delete, class: "btn btn-danger"
-                br
+              .panel.panel-default
+                .panel-body.text-right
+                  small = m.created_at
+                  br
+                  = m.content
+                  '
+                  |
+                  = link_to contact_message_path(@contact_user, m), method: :delete do
+                    span.glyphicon.glyphicon-remove-circle
             - else
-              = m.created_at
-              |,
-              '
-              |
-              = m.user.username
-              |:
-              '
-              |
-              = m.content
-            hr
+              .panel.panel-default
+                .panel-body
+                  small = m.created_at
+                  br
+                  = m.content
   .row
     .col-lg-12
       = simple_form_for @message, url: contact_messages_path(@contact_user), method: :post do |f|
