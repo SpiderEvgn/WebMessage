@@ -5,6 +5,14 @@
         = @contact.username
         .panel-body
           - @messages.each do |m|
+            = m.created_at
+            |,
+            '
+            |
+            = m.user.username
+            |:
+            '
+            |
             = m.content
             hr
   .row

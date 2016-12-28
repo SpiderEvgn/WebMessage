@@ -21,5 +21,11 @@ module WebMessage
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+    config.time_zone = 'Asia/Shanghai'
+    config.active_record.default_timezone = :local
   end
 end
+
+Date::DATE_FORMATS[:default] = "%Y-%m-%d"
+Time::DATE_FORMATS[:default] = "%Y-%m-%d %H:%M"
+DateTime::DATE_FORMATS[:default] = "%Y-%m-%d %H:%M"
