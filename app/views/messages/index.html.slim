@@ -5,7 +5,7 @@
         .panel-heading
           h3.panel-title
             = @contact_user.username
-        h4.panel-body
+        h4.panel-body style="height: 400px;overflow-y: scroll;"
           - @messages.each do |m|
             / 要用页面的动态判断来调整 class
             - if m.user.id == current_user.id
