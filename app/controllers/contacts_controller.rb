@@ -3,7 +3,7 @@ class ContactsController < ApplicationController
 
   def index
     contact_ids = current_user.contacts.map(&:contact_id)
-    @contacts = User.find(contact_ids)
+    @contact_users = User.find(contact_ids)
   end
 
   def new

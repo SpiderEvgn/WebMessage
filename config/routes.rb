@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
     
   resources :contacts, only: [:index, :new, :create, :destroy] do
-    resources :messages, only: [:index, :create]
+    resources :messages, only: [:index, :create, :destroy]
   end
 
   devise_for :users

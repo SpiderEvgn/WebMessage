@@ -6,13 +6,13 @@ table.table.table-striped.table-hover
       th 联系人用户名
 
   tbody
-    - @contacts.each do |contact|
+    - @contact_users.each do |contact_user|
       tr
-        td = contact.id
-        td = contact.email
-        td = contact.username
-        td = link_to "聊天", contact_messages_path(contact), class: "btn btn-success"
-        td = link_to "删除", contact_path(contact), method: :delete, class: "btn btn-danger", data: {confirm: '确认删除？'}
+        td = contact_user.id
+        td = contact_user.email
+        td = contact_user.username
+        td = link_to "聊天", contact_messages_path(contact_user), class: "btn btn-success"
+        td = link_to "删除", contact_path(contact_user), method: :delete, class: "btn btn-danger", data: {confirm: '确认删除？'}
 
 = link_to "新建联系人", new_contact_path, class: "btn btn-primary"
 

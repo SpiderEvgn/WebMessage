@@ -2,22 +2,39 @@
   .row
     .col-lg-12
       .panel.panel-default
-        = @contact.username
+        = @contact_user.username
         .panel-body
           - @messages.each do |m|
-            = m.created_at
-            |,
-            '
-            |
-            = m.user.username
-            |:
-            '
-            |
-            = m.content
+            / 要用页面的动态判断来调整 class
+            - if m.user.id == current_user.id
+              span.pull-right
+                = m.created_at
+                |,
+                '
+                |
+                = m.user.username
+                |:
+                '
+                |
+                = m.content
+                '
+                |
+                = link_to '清除', contact_message_path(@contact_user, m), method: :delete, class: "btn btn-danger"
+                br
+            - else
+              = m.created_at
+              |,
+              '
+              |
+              = m.user.username
+              |:
+              '
+              |
+              = m.content
             hr
   .row
     .col-lg-12
-      = simple_form_for @message, url: contact_messages_path(@contact), method: :post do |f|
+      = simple_form_for @message, url: contact_messages_path(@contact_user), method: :post do |f|
         .form-inputs
           = f.input :content, label: false, placeholder: '输入要发送的消息', required: true, autofocus: true
         .form-actions
