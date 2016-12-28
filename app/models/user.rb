@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   attr_accessor :login
+  acts_as_paranoid
   has_many :messages
   has_many :contacts, dependent: :destroy
   # Include default devise modules. Others available are:
@@ -26,11 +27,6 @@ class User < ApplicationRecord
         where(username: conditions[:username]).first
       end
     end
-  end
-
-  def set_access_token
-    self.access_token = SecureRandom.urlsafe_base64
-    self.save
   end
 
 end
