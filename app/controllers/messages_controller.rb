@@ -10,6 +10,9 @@ class MessagesController < ApplicationController
     messages_ids = messages_array.map(&:id)
     @messages = Message.includes(:user).where(id: messages_ids).order(:created_at)
 
+    # 进入聊天后，将此联系人用户所有消息设为已读，之后优化只更新未读条母
+    @contact_user.messages.where(to_user_id: current_user).update_all(is_read: true)
+
     @message = current_user.messages.new
   end
 

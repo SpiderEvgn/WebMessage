@@ -5,6 +5,7 @@ table.table.table-striped.table-hover
       th 联系人邮箱
       th 联系人用户名
       th 添加时间
+      th 聊天／未读消息
 
   tbody
     - @contact_users.each do |contact_user|
@@ -13,7 +14,12 @@ table.table.table-striped.table-hover
         td = contact_user.email
         td = contact_user.username
         td = contact_user.created_at
-        td = link_to "聊天", contact_messages_path(contact_user), class: "btn btn-success"
+        td = link_to contact_messages_path(contact_user), class: "btn btn-success" do
+          聊天
+          '
+          span.badge
+            = not_read_messages(contact_user)
+        end
         td = link_to "删除联系人", contact_path(contact_user), method: :delete, class: "btn btn-danger", data: {confirm: '确认删除？'}
 
 = link_to "新建联系人", new_contact_path, class: "btn btn-primary"

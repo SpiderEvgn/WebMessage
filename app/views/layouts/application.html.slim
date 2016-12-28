@@ -27,9 +27,11 @@ html
     - if notice
       .notice.alert.alert-success
         = notice
+        a.close type="button" data-dismiss="alert" &times;
     - if alert
       .alert.alert-danger
         = alert
+        a.close type="button" data-dismiss="alert" &times;
         
     .container-fluid
       .row
