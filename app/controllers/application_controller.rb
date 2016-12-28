@@ -5,10 +5,11 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected
-  def after_sign_in_path_for(resource)
-    resource.set_access_token
-    user_contacts_path(resource.access_token)
-  end
+
+  # 重定向登录后的页面。暂且用不到
+  # def after_sign_in_path_for(resource)
+  #   user_contacts_path
+  # end
 
   def configure_permitted_parameters
     added_attrs = [:username, :email, :password, :password_confirmation, :remember_me]

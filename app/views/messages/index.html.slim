@@ -2,13 +2,14 @@
   .row
     .col-lg-12
       .panel.panel-default
+        = @contact.username
         .panel-body
           - @messages.each do |m|
             = m.content
             hr
   .row
     .col-lg-12
-      = simple_form_for @message, url: user_contact_messages_path(current_user.access_token, @contact), method: :post do |f|
+      = simple_form_for @message, url: contact_messages_path(@contact), method: :post do |f|
         .form-inputs
           = f.input :content, label: false, placeholder: '输入要发送的消息', required: true, autofocus: true
         .form-actions

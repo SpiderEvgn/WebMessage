@@ -11,8 +11,8 @@ table.table.table-striped.table-hover
         td = contact.id
         td = contact.email
         td = contact.username
-        td = link_to "聊天", user_contact_messages_path(current_user.access_token, contact), class: "btn btn-success"
-        td = link_to "删除", user_contact_path(current_user.access_token, contact), method: :delete, class: "btn btn-danger", data: {confirm: '确认删除？'}
+        td = link_to "聊天", contact_messages_path(contact), class: "btn btn-success"
+        td = link_to "删除", contact_path(contact), method: :delete, class: "btn btn-danger", data: {confirm: '确认删除？'}
 
-= link_to "新建联系人", user_new_contact_path(current_user.access_token), class: "btn btn-primary"
+= link_to "新建联系人", new_contact_path, class: "btn btn-primary"
 

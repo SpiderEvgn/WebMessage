@@ -16,7 +16,7 @@ class ContactsController < ApplicationController
     if contacts_deleted && contacts_deleted.map(&:contact_id).include?(contact_params[:contact_id].to_i)
       d_contact = Contact.only_deleted.find_by(user_id: current_user.id, contact_id: contact_params[:contact_id].to_i)
       Contact.restore(d_contact.id)
-      redirect_to user_contacts_url(current_user.access_token), notice: "New contact added successfully."
+      redirect_to contacts_url, notice: "New contact added successfully."
     else
       # 判断用户存不存在
       if User.all.map(&:id).include?(contact_params[:contact_id].to_i)
@@ -26,7 +26,7 @@ class ContactsController < ApplicationController
         else
           @contact = current_user.contacts.new(contact_params)
           @contact.save
-          redirect_to user_contacts_url(current_user.access_token), notice: "New contact added successfully."\
+          redirect_to contacts_url, notice: "New contact added successfully."\
         end
       else
         render :new, error: "No user found."
@@ -36,7 +36,7 @@ class ContactsController < ApplicationController
 
   def destroy
     @contact.destroy
-    redirect_to user_contacts_url(current_user.access_token), notice: 'Contact was successfully destroyed.'
+    redirect_to contacts_url, notice: 'Contact was successfully destroyed.'
   end
 
   private

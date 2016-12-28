@@ -14,8 +14,12 @@ html
           .navbar-brand WebMessage by Spider
 
         .nav.navbar-nav.navbar-right
-          - if user_signed_in?
-            = link_to "| 注 销", destroy_user_session_path, method: :delete, data: { confirm: "确认退出？" }, class: "navbar-brand"
+          .navbar-brand
+            - if user_signed_in?
+              = current_user.username
+              '
+              |
+              = link_to "| 注 销", destroy_user_session_path, method: :delete
 
     .container-fluid
       .row

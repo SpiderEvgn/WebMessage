@@ -1,6 +1,6 @@
 h2 添加联系人
 br
-= simple_form_for :contact, url: user_contacts_path(current_user.access_token), method: :post do |f|
+= simple_form_for :contact, url: contacts_path, method: :post do |f|
   .form-inputs
     = f.input :contact_id, label: false, placeholder: '请输入联系人编号', required: true, autofocus: true
   hr
