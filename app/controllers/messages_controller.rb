@@ -5,9 +5,9 @@ class MessagesController < ApplicationController
   def index
     # 聊天框初始只显示最后 5 次记录
     @messages = current_user.get_all_messages(@contact_user, 5)
-    # 进入聊天后，将此联系人用户所有消息设为已读，之后优化只更新未读条目，并将逻辑放到 model 层
-    @contact_user.messages.where(to_user_id: current_user).update_all(is_read: true)
-
+    # 进入聊天后，将此联系人用户未读消息置否
+    @contact_user.clear_messages_unread_count(current_user.id)
+    
     @message = current_user.messages.new
   end
 
@@ -23,13 +23,15 @@ class MessagesController < ApplicationController
       @contact_user.add_contact_when_message(current_user.id)
       redirect_to contact_messages_url(@contact_user)
     else
-      redirect_to contact_messages_url, alert: "消息不可为空！"
+      @messages = current_user.get_all_messages(@contact_user, 5)
+      render :index
+      # redirect_to contact_messages_url, alert: "消息不可为空！"
     end
   end
 
   def destroy
     @message.destroy
-    redirect_to contact_messages_url
+    redirect_to :back
   end
 
   private

@@ -96,4 +96,9 @@ class User < ApplicationRecord
     count ? all_messages.last(5) : all_messages
   end
 
+  # 将联系人用户未读消息置否
+  def clear_messages_unread_count(current_user_id)
+    self.messages.where(to_user_id: current_user_id, is_read: false).update_all(is_read: true)
+  end
+
 end

@@ -6,23 +6,7 @@
           h3.panel-title
             = @contact_user.username
         h4.panel-body.message-body style="height: 450px; overflow-y: scroll;"
-          - @messages.each do |m|
-            / 要用页面的动态判断来调整 class
-            - if m.user.id == current_user.id
-              .panel.panel-default
-                .panel-body.text-right
-                  small = m.created_at
-                  br
-                  = m.content
-                  '
-                  |
-                  = link_to contact_message_path(@contact_user, m), method: :delete do
-                    span.glyphicon.glyphicon-remove-circle
-            - else
-              .panel.panel-default
-                .panel-body
-                  small = m.created_at
-                  br
-                  = m.content
+          - @messages.each do |message|
+            = render partial: 'message', locals: {m: message, c_user: @contact_user}
         .panel-footer
           = link_to "返回", contact_messages_path(@contact_user), class: "btn btn-warning"

@@ -19,3 +19,7 @@ cn:
               too_short: "密码长度不足 6 位字符。"
             password_confirmation:
               confirmation: "两次密码输入不一致。"
+        message:
+          attributes:
+            content:
+              blank: "消息不能为空！"

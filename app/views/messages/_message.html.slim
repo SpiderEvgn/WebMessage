@@ -1,0 +1,17 @@
+/ 要用页面的动态判断来调整 class
+- if m.user.id == current_user.id
+  .panel.panel-default
+    .panel-body.text-right
+      small = m.created_at
+      br
+      = m.content
+      '
+      |
+      = link_to contact_message_path(c_user, m), method: :delete do
+        span.glyphicon.glyphicon-remove-circle
+- else
+  .panel.panel-default
+    .panel-body
+      small = m.created_at
+      br
+      = m.content
