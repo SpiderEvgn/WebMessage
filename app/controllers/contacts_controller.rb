@@ -11,6 +11,8 @@ class ContactsController < ApplicationController
   end
 
   def create
+    # 添加联系人的验证步骤要放到 model 层去验证，有时间去做优化
+
     # 先判断在不在历史删除的联系人列表
     contacts_deleted = current_user.contacts.only_deleted
     if contacts_deleted && contacts_deleted.map(&:contact_id).include?(contact_params[:contact_id].to_i)

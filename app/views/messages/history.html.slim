@@ -1,11 +1,11 @@
 .container-fluid
   .row
     .col-lg-12
-      .panel.panel-info
+      .panel.panel-primary
         .panel-heading
           h3.panel-title
             = @contact_user.username
-        h4.panel-body.message-body style="height: 400px; overflow-y: scroll;"
+        h4.panel-body.message-body style="height: 450px; overflow-y: scroll;"
           - @messages.each do |m|
             / 要用页面的动态判断来调整 class
             - if m.user.id == current_user.id
@@ -24,3 +24,5 @@
                   small = m.created_at
                   br
                   = m.content
+        .panel-footer
+          = link_to "返回", contact_messages_path(@contact_user), class: "btn btn-warning"

@@ -29,6 +29,17 @@ class MessagesController < ApplicationController
     @message.update_attributes(to_user_id: params[:contact_id])
 
     if @message.save
+      # 判断自己是否是对方联系人的好友，若否，则自动将自己添加到对方联系人列表
+      unless @contact_user.contacts.map(&:contact_id).include?(current_user.id)
+        # 先判断自己是否曾经是对方的好友
+        contacts_deleted = @contact_user.contacts.only_deleted
+        if contacts_deleted && contacts_deleted.map(&:contact_id).include?(current_user.id)
+          d_contact = Contact.only_deleted.find_by(user_id: @contact_user.id, contact_id: current_user.id)
+          Contact.restore(d_contact.id)
+        else
+          @contact_user.contacts.create!(contact_id: current_user.id)
+        end
+      end
       redirect_to contact_messages_url(@contact_user)
     else
       redirect_to contact_messages_url(@contact_user), alert: "消息不可为空！"
