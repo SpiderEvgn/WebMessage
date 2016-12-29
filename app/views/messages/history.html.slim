@@ -9,3 +9,6 @@
           = render partial: 'messages', locals: { messages: @messages, c_user: @contact_user }
         .panel-footer
           = link_to "返回", contact_messages_path(@contact_user), class: "btn btn-warning"
+
+javascript:
+  document.getElementById('message-box').scrollTop = document.getElementById('message-box').scrollHeight;

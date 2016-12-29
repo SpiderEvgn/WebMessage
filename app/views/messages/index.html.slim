@@ -5,7 +5,7 @@
         .panel-heading
           h3.panel-title
             = @contact_user.username
-        h4.panel-body.message-box style="height: 400px; overflow-y: scroll;"
+        h4.panel-body id="message-box" style="height: 400px; overflow-y: scroll;"
           = render partial: 'messages', locals: { messages: @messages, c_user: @contact_user }
   .row
     .col-lg-12
@@ -18,3 +18,6 @@
           |
           = link_to "历史消息", contact_messages_history_path, class: "btn btn-info"
       end
+
+javascript:
+  document.getElementById('message-box').scrollTop = document.getElementById('message-box').scrollHeight;
