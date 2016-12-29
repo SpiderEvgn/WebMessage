@@ -39,29 +39,33 @@ Things you may want to cover:
 - 当用户 A 发私信给用户 B 时，如果 A 还不是 B 的联系人，应该自动把 A 添加为 B 的联系人，并能够在 B 的联系人列表正常显示（不需要实时）
 - 用户可以删除自己发的消息                       
 
+
+设计思路：
 ------------------------------------------------------------------------------------------
 Model:
 User, id, email, username, password, password_confirmation
 Contact, user_id, contact_id, created_at
-Message, user_id, to_user_id, content, created_at
+Message, user_id, to_user_id, content, created_at, is_read
 
 user has_many contacts
 通过 contacts 表关联起一个 user 和他所有的 contacts
 
 user has_many messages
-一个 user a 能罗列他所有的联系人，当点击一个联系人 b 的时候通过获取 b.contact_id，这时，检索 a.messages.where(to_user_id: b.id) 和 b.messages.where(to_user_id: a.id) 来获取 a <-> b 的所有聊天记录
+每个 user 只关心自己发出去的信息，当要获取双方聊天记录的时候，取出各自发给对方的信息即可：
+一个 user a 点击一个联系人 b 的时候获取 b.id，这时，检索 a.messages.where(to_user_id: b.id) 和 b.messages.where(to_user_id: a.id) 来获取 a <-> b 的所有聊天记录
 
 Views:
-1. 用户注册，登录后，进入 1_联系人列表界面_ （删除，选择聊天，显示未读消息数）
-2. 联系人列表界面 ->添加联系人 ->跳往 2_添加联系人界面_
-3. 点击联系人进入 3_聊天界面_  ，显示历史聊天记录，记录可删除
-
+1. 用户注册 -> 登录 -> 1_联系人列表界面_ （选择聊天，显示未读消息数，删除联系人）
+2. 1_联系人列表界面_ ->添加联系人 -> 2_添加联系人界面_
+3. 1_联系人列表界面_ ->联系人聊天 -> 3_聊天界面_ (只显示最后 5 条聊天记录，自己的信息可删除)
+4. 3_聊天界面_ ->历史消息 -> 4_历史消息界面_ （显示所有消息，自己的信息可删除）
 
 
 以下为设想，并未实现user的删除功能：
 删除 user 会对应删除 所有的 user.contacts，但会保留所有 messages，因为原本的 contact 还能查看历史消息
-发信息要确认对方账户是否还存在，不存在则不能发信息，对方联系人把自己账户删除并不会影响你的列表，你依旧能查看历史消息
+发信息要确认对方账户是否还存在，不存在则不能发信息，对方联系人把自己账户删除并不会影响你的列表，你依旧能查看历史消息。只是不能再发送
 ------------------------------------------------------------------------------------------
+
 加分项：
 
 * 联系人列表页面未读消息数实时更新
