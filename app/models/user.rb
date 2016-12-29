@@ -12,7 +12,10 @@ class User < ApplicationRecord
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, uniqueness: true, format: { with: VALID_EMAIL_REGEX }
 
-  validates :username, presence: true, uniqueness: true, length: { in: 6..20 }
+  # issue: 需要考虑username的大小写问题，devise默认登录方法是忽略大小写，但是创建时不同于devise默认字段email用小写保存，
+  # 导致在用username添加联系人时会因为大小写混乱（忽略大小写可以登录，但是添加联系人要求严格大小写）目前设置了username
+  # 的唯一性验证也是忽略大小写的，所以暂时没有逻辑漏洞
+  validates :username, presence: true, uniqueness: { case_sensitive: false }, length: { in: 6..20 }
   validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, :multiline => true
 
 
@@ -32,22 +35,19 @@ class User < ApplicationRecord
   def add_contact(contact_params)
     # 判断是否存在这个联系人账户
     if contact_params.include? '@'
-      contact_user = User.find_by(email: contact_params)
+      contact_user = User.find_by(email: contact_params.downcase)
       unless contact_user
         return "not_found"
       end
       contact_id = contact_user.id
-    elsif contact_params.length < 6
-      contact_id = contact_params.to_i
-      unless User.all.map(&:id).include?(contact_id)
-        return "not_found"
-      end
-    else
+    elsif contact_params.length > 5
       contact_user = User.find_by(username: contact_params)
       unless contact_user
         return "not_found"
       end
       contact_id = contact_user.id
+    else
+      return "not_found"
     end
     # 判断是否是历史联系人
     contacts_deleted = self.contacts.only_deleted

@@ -24,9 +24,8 @@ class MessagesController < ApplicationController
         @contact_user.add_contact_when_message(current_user.id)
         format.js
       else
-        @messages = current_user.get_all_messages(@contact_user, 5)
-        # 消息为空时的 js 处理有问题，下一个 commit 解决
-        format.js { render :index }
+        # bug: 消息为空时的 js 处理有问题，下一个 commit 解决
+        format.js
       end
     end
   end
