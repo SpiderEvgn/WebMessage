@@ -4,11 +4,11 @@ class MessagesController < ApplicationController
 
   def index
     messages_array = []
-    current_user.messages.where(to_user_id: params[:contact_id]).each {|m| messages_array << m if m}
-    @contact_user.messages.where(to_user_id: current_user.id).each {|m| messages_array << m if m}
+    current_user.messages.where(to_user_id: params[:contact_id]).last(5).each {|m| messages_array << m if m}
+    @contact_user.messages.where(to_user_id: current_user.id).last(5).each {|m| messages_array << m if m}
     # 将 array 转换成 relation 用于时间排序
     messages_ids = messages_array.map(&:id)
-    @messages = Message.includes(:user).where(id: messages_ids).order(:created_at)
+    @messages = Message.includes(:user).where(id: messages_ids).order(:created_at).last(5)
 
     # 进入聊天后，将此联系人用户所有消息设为已读，之后优化只更新未读条目
     @contact_user.messages.where(to_user_id: current_user).update_all(is_read: true)
