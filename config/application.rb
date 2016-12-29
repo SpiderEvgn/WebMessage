@@ -27,6 +27,4 @@ module WebMessage
   end
 end
 
-Date::DATE_FORMATS[:default] = "%Y-%m-%d"
 Time::DATE_FORMATS[:default] = "%Y-%m-%d %H:%M"
-DateTime::DATE_FORMATS[:default] = "%Y-%m-%d %H:%M"
