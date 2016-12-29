@@ -1,5 +1,5 @@
 class MessagesController < ApplicationController
-  before_action :set_contact_id, only: [:index, :create]
+  before_action :set_contact_id, only: [:index, :create, :history]
   before_action :set_message, only: :destroy
 
   def index
@@ -14,6 +14,14 @@ class MessagesController < ApplicationController
     @contact_user.messages.where(to_user_id: current_user).update_all(is_read: true)
 
     @message = current_user.messages.new
+  end
+
+  def history
+    messages_array = []
+    current_user.messages.where(to_user_id: params[:contact_id]).each {|m| messages_array << m if m}
+    @contact_user.messages.where(to_user_id: current_user.id).each {|m| messages_array << m if m}
+    messages_ids = messages_array.map(&:id)
+    @messages = Message.includes(:user).where(id: messages_ids).order(:created_at)
   end
 
   def create

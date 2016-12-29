@@ -5,7 +5,7 @@
         .panel-heading
           h3.panel-title
             = @contact_user.username
-        h4.panel-body style="height: 400px; overflow-y: scroll;"
+        h4.panel-body.message-body style="height: 400px; overflow-y: scroll;"
           - @messages.each do |m|
             / 要用页面的动态判断来调整 class
             - if m.user.id == current_user.id
@@ -24,14 +24,3 @@
                   small = m.created_at
                   br
                   = m.content
-  .row
-    .col-lg-12
-      = simple_form_for @message, url: contact_messages_path(@contact_user), method: :post do |f|
-        .form-inputs
-          = f.input :content, label: false, placeholder: '输入要发送的消息', required: true, autofocus: true
-        .form-actions
-          = f.button :submit, value: "发送", class: "btn btn-success"
-          '
-          |
-          = link_to "历史消息", contact_messages_history_path, class: "btn btn-info"
-      end
