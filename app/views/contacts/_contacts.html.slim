@@ -9,7 +9,7 @@ table.table.table-striped.table-hover
 
   tbody
     - contact_users.each do |contact_user|
-      tr
+      tr id="contact_user_#{contact_user.id}"
         td = contact_user.id
         td = contact_user.username
         td = contact_user.email

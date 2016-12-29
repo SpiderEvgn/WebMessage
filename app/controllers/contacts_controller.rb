@@ -27,10 +27,7 @@ class ContactsController < ApplicationController
 
   def destroy
     @contact.destroy
-    contact_ids = current_user.contacts.map(&:contact_id)
-    @contact_users = User.find(contact_ids)
     respond_to do |format|
-      format.html { redirect_to contacts_url, notice: '联系人删除成功。' }
       format.js
     end
   end
