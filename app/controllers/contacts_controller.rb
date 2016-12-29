@@ -24,15 +24,16 @@ class ContactsController < ApplicationController
       if User.all.map(&:id).include?(contact_params[:contact_id].to_i)
         # 判断是否已经添加到联系人
         if current_user.contacts.map(&:contact_id).include?(contact_params[:contact_id].to_i)
-          redirect_to new_contact_path, alert: "该用户已经是您的联系人。"
+          flash.now[:alert] = "该用户已经是您的联系人。"
+          render :new
         else
           @contact = current_user.contacts.new(contact_params)
           @contact.save
           redirect_to contacts_url, notice: "联系人添加成功。"
         end
       else
-        # 用 render 会不出现 alert，之后再检查
-        redirect_to new_contact_path, alert: "没有此用户！"
+        flash.now[:alert] = "没有此用户！"
+        render :new
       end
     end
   end

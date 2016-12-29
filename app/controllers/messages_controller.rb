@@ -42,7 +42,8 @@ class MessagesController < ApplicationController
       end
       redirect_to contact_messages_url(@contact_user)
     else
-      redirect_to contact_messages_url(@contact_user), alert: "消息不可为空！"
+      flash.now[:alert] = "消息不可为空！"
+      render :new
     end
   end
 
