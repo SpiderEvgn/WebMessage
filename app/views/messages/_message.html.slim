@@ -1,12 +1,12 @@
 - if m.user.id == current_user.id
-  .panel.panel-default
+  .panel.panel-default id="message_#{m.id}"
     .panel-body.text-right
       small = m.created_at
       br
       = m.content
       '
       |
-      = link_to contact_message_path(c_user, m), method: :delete do
+      = link_to contact_message_path(c_user, m), remote: true, method: :delete do
         span.glyphicon.glyphicon-remove-circle
 - else
   .panel.panel-default

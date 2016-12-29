@@ -18,27 +18,24 @@ class MessagesController < ApplicationController
   def create
     @message = current_user.messages.build(message_params)
     @message.update_attributes(to_user_id: params[:contact_id])
-    if @message.save
-      # 如果自己不是对方联系人好友，则自动添加到对方联系人列表
-      @contact_user.add_contact_when_message(current_user.id)
-      respond_to do |format|
-        # format.html { redirect_to contact_messages_url(@contact_user) }
+    respond_to do |format|
+      if @message.save
+        # 如果自己不是对方联系人好友，则自动添加到对方联系人列表
+        @contact_user.add_contact_when_message(current_user.id)
         format.js
-      end
-    else
-      @messages = current_user.get_all_messages(@contact_user, 5)
-      # 消息为空时的 js 处理有问题，下一个 commit 解决
-      respond_to do |format|
-        # format.html { redirect_to contact_messages_url(@contact_user) }
+      else
+        @messages = current_user.get_all_messages(@contact_user, 5)
+        # 消息为空时的 js 处理有问题，下一个 commit 解决
         format.js { render :index }
       end
     end
-
   end
 
   def destroy
     @message.destroy
-    redirect_to :back
+    respond_to do |format|
+      format.js
+    end
   end
 
   private
