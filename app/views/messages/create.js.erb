@@ -1,0 +1,3 @@
+$('.message-box').append("<%= j render(partial: 'message', locals: { m: @message, c_user: @contact_user }) %>");
+$('.message-box').scrollTop($('.message-box').height());
+$('#message_content').val("");

@@ -21,12 +21,19 @@ class MessagesController < ApplicationController
     if @message.save
       # 如果自己不是对方联系人好友，则自动添加到对方联系人列表
       @contact_user.add_contact_when_message(current_user.id)
-      redirect_to contact_messages_url(@contact_user)
+      respond_to do |format|
+        # format.html { redirect_to contact_messages_url(@contact_user) }
+        format.js
+      end
     else
       @messages = current_user.get_all_messages(@contact_user, 5)
-      render :index
-      # redirect_to contact_messages_url, alert: "消息不可为空！"
+      # 消息为空时的 js 处理有问题，下一个 commit 解决
+      respond_to do |format|
+        # format.html { redirect_to contact_messages_url(@contact_user) }
+        format.js { render :index }
+      end
     end
+
   end
 
   def destroy

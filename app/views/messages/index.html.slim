@@ -5,11 +5,11 @@
         .panel-heading
           h3.panel-title
             = @contact_user.username
-        h4.panel-body style="height: 400px; overflow-y: scroll;"
-          = render partial: 'message', locals: { messages: @messages, c_user: @contact_user }
+        h4.panel-body.message-box style="height: 400px; overflow-y: scroll;"
+          = render partial: 'messages', locals: { messages: @messages, c_user: @contact_user }
   .row
     .col-lg-12
-      = simple_form_for @message, url: contact_messages_path(@contact_user), method: :post do |f|
+      = simple_form_for @message, url: contact_messages_path(@contact_user), remote: true, method: :post do |f|
         .form-inputs
           = f.input :content, label: false, placeholder: '输入要发送的消息', required: true, autofocus: true
         .form-actions
