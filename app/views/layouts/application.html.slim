@@ -13,16 +13,24 @@ html
         .navbar-header
           .navbar-brand WebMessage by Aaron Zhang
         
-        ul.nav.navbar-nav.navbar-right
+        .nav.navbar-nav.navbar-right
           - if user_signed_in?
-            li.navbar-brand
-              = current_user.email
-            li
-              = link_to '前往联系人列表', contacts_path
-            li
-              hr
-            li
-              = link_to '注 销', destroy_user_session_path, method: :delete
+            .dropdown.navbar-brand
+              a.dropdown-toggle data-toggle="dropdown" href="#"
+                = current_user.username
+                '
+                | -
+                '
+                | 
+                = current_user.email
+                ' 
+                span.caret
+              ul.dropdown-menu.dropdown-menu-left
+                li
+                  = link_to '前往联系人列表', contacts_path
+                li.divider
+                li
+                  = link_to '注 销', destroy_user_session_path, method: :delete
 
     - if notice
       .notice.alert.alert-success

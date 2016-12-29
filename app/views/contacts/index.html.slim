@@ -2,8 +2,8 @@ table.table.table-striped.table-hover
   thead
     tr
       th 联系人编号
-      th 联系人邮箱
       th 联系人用户名
+      th 联系人邮箱
       th 添加时间
       th 聊天／未读消息
 
@@ -11,8 +11,8 @@ table.table.table-striped.table-hover
     - @contact_users.each do |contact_user|
       tr
         td = contact_user.id
-        td = contact_user.email
         td = contact_user.username
+        td = contact_user.email
         td = contact_user.created_at
         td = link_to contact_messages_path(contact_user), class: "btn btn-success" do
           聊天
