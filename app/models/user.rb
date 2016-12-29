@@ -81,8 +81,8 @@ class User < ApplicationRecord
 
   # 获取当前用户与联系人聊天记录
   def get_all_messages(contact_user, count=nil)
-    self_messages = self.messages.where(to_user_id: contact_user.id)
-    cont_messages = contact_user.messages.where(to_user_id: self.id)
+    self_messages = self.messages.to_user(contact_user.id)
+    cont_messages = contact_user.messages.to_user(self.id)
     if count
       self_messages = self_messages.last(5)
       cont_messages = cont_messages.last(5)
@@ -98,7 +98,7 @@ class User < ApplicationRecord
 
   # 将联系人用户未读消息置否
   def clear_messages_unread_count(current_user_id)
-    self.messages.where(to_user_id: current_user_id, is_read: false).update_all(is_read: true)
+    self.messages.to_user(current_user_id).not_read.update_all(is_read: true)
   end
 
 end
