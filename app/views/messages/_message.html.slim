@@ -7,7 +7,7 @@
       '
       |
       = link_to contact_message_path(c_user, m), remote: true, method: :delete do
-        span.glyphicon.glyphicon-remove-circle
+        = fa_icon "trash", class: "fa-fw"
 - else
   .panel.panel-default
     .panel-body
