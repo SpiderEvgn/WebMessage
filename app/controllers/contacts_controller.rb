@@ -6,23 +6,37 @@ class ContactsController < ApplicationController
     @contact_users = User.find(contact_ids)
   end
 
-  def new
-    @contact = current_user.contacts.new
-  end
-
   def create
-    case current_user.add_contact(contact_params[:contact_id])
-    when "old"
-      redirect_to contacts_url, notice: "联系人添加成功（该用户曾经是您的联系人）"
-    when "success"
-      redirect_to contacts_url, notice: "联系人添加成功。"
-    when "not_found"
-      flash.now[:alert] = "没有此用户！"
-      render :new
-    when "taken"
-      flash.now[:alert] = "该用户已经是您的联系人。"
-      render :new
+    # respond_to do |format|
+    case result = current_user.add_contact(contact_params[:contact_id])
+    when result[:status] == "old"
+      # @new_contact = User.find(result[:contact_user_id])
+      respond_to do |format|
+        @new_contact = User.find(result[:contact_user_id])
+        format.js
+      end
+      # redirect_to contacts_url, notice: "联系人添加成功（该用户曾经是您的联系人）"
+    when result[:status] == "success"
+      @new_contact = User.find(result[:contact_user_id])
+      respond_to do |format|
+        format.js { @new_contact }
+      end
+      # redirect_to contacts_url, notice: "联系人添加成功。"
+    when result[:status] == "taken"
+      # flash.now[:alert] = "该用户已经是您的联系人。"
+      # render :new
+      respond_to do |format|
+        format.js
+      end
+    when result[:status] == "not_found"
+      # flash.now[:alert] = "没有此用户！"
+      # render :new
+      # format.js
+      respond_to do |format|
+        format.js
+      end
     end
+    # end
   end
 
   def destroy

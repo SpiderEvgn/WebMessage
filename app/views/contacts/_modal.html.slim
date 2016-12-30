@@ -1,0 +1,14 @@
+.modal.fade id="new_contact_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h3.modal-title 添加联系人
+      .modal-body
+        = simple_form_for :contact, url: contacts_path, remote: true, method: :post do |f|
+          .form-inputs
+            = f.input :contact_id, label: false, placeholder: '请输入 邮箱 / 用户名 添加联系人', required: true, autofocus: true
+          hr
+          .form-actions
+            = f.button :submit, value: "添加", class: "btn btn-primary btn-block"
+            = link_to "返回", "#", class: "btn btn-warning btn-block", data: { dismiss: "modal" }   
+        end

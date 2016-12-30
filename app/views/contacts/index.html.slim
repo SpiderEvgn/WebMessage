@@ -1,3 +1,15 @@
-= render partial: 'contacts', locals: { contact_users: @contact_users }
-= link_to "新建联系人", new_contact_path, class: "btn btn-primary"
+table.table.table-striped.table-hover
+  thead
+    tr
+      th 联系人编号
+      th 联系人用户名
+      th 联系人邮箱
+      th 添加时间
+      th 聊天／未读消息
 
+  tbody id="contacts_table"
+    - @contact_users.each do |contact_user|
+      = render partial: 'contact', locals: { contact: contact_user }
+= link_to "新建联系人", "#", class: "btn btn-primary", data: { toggle: "modal", target: "#new_contact_modal"}
+
+= render 'modal'

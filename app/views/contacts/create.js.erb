@@ -1,0 +1,6 @@
+<% if @new_contact %>
+  $('#new_contact_modal').modal('hide');
+  $('#contacts_table').append("<%= j render(partial: 'contact', locals: { contact: @new_contact }) %>");
+<% else %>
+  alert("<%= @new_contact %>");
+<% end %>

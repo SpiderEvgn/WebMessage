@@ -37,31 +37,38 @@ class User < ApplicationRecord
     if contact_params.include? '@'
       contact_user = User.find_by(email: contact_params.downcase)
       unless contact_user
-        return "not_found"
+        return { status: "not_found" }
       end
-      contact_id = contact_user.id
+      contact_user_id = contact_user.id
     elsif contact_params.length > 5
       contact_user = User.find_by(username: contact_params)
       unless contact_user
-        return "not_found"
+        return { status: "not_found" }
       end
-      contact_id = contact_user.id
+      contact_user_id = contact_user.id
     else
-      return "not_found"
+      return { status: "not_found" }
     end
     # 判断是否是历史联系人
     contacts_deleted = self.contacts.only_deleted
-    if contacts_deleted && contacts_deleted.map(&:contact_id).include?(contact_id)
-      d_contact = Contact.only_deleted.find_by(user_id: self.id, contact_id: contact_id)
+    if contacts_deleted && contacts_deleted.map(&:contact_id).include?(contact_user_id)
+      d_contact = Contact.only_deleted.find_by(user_id: self.id, contact_id: contact_user_id)
+      # issue: 这里还要处理一个逻辑，将 updated_at 置为 now，联系人的添加时间要现实 updated_at
       Contact.restore(d_contact.id)
-      return "old"
+      return {
+        status: "old",
+        contact_user_id: contact_user_id
+        }
     # 判断是否已经添加到联系人
-    elsif self.contacts.map(&:contact_id).include?(contact_id)
-      return "taken"
+    elsif self.contacts.map(&:contact_id).include?(contact_user_id)
+      return { status: "taken" }
     else
-      @contact = self.contacts.new(contact_id: contact_id)
+      @contact = self.contacts.new(contact_id: contact_user_id)
       @contact.save
-      return "success"
+      {
+        status: "success",
+        contact_user_id: contact_user_id
+      }
     end
   end
 

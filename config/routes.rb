@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
     
-  resources :contacts, only: [:index, :new, :create, :destroy] do
+  resources :contacts, only: [:index, :create, :destroy] do
     resources :messages, only: [:index, :create, :destroy]
     get '/messages_history', to: 'messages#history', as: "messages_history"
   end
