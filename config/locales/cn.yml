@@ -19,6 +19,9 @@ cn:
               too_short: "密码长度不足 6 位字符。"
             password_confirmation:
               confirmation: "两次密码输入不一致。"
+            current_password:
+              blank: "请输入您的当前密码。"
+              invalid: "当前密码不匹配，请重新输入！"
         message:
           attributes:
             content:
