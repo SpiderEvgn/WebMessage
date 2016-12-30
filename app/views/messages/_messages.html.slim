@@ -1,4 +1,4 @@
-/ 这里直接把'message'代码放过来循环输出，因为历史消息过多，否则会造成大量的 render partial
+/ 因为历史消息过多，这里直接把'message'代码贴过来循环输出，否则会造成大量的 render partial
 - messages.each do |m|
   - if m.user.id == current_user.id
     .panel.panel-default id="message_#{m.id}"

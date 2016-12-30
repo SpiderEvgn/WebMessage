@@ -2,7 +2,7 @@ tr id="contact_user_#{contact.id}"
   td = contact.id
   td = contact.username
   td = contact.email
-  td = contact.created_at
+  td = contact.updated_at
   td = link_to contact_messages_path(contact), class: "btn btn-success" do
     = fa_icon "comments", class: "fa-fw"
     '
@@ -11,9 +11,7 @@ tr id="contact_user_#{contact.id}"
     |
     span.badge
       = not_read_messages(contact)
-
-  end
-  td = link_to contact_path(contact), remote: true, method: :delete, class: "btn btn-danger", data: {confirm: '确认删除？'} do
+  td = link_to contact_path(contact), remote: true, method: :delete, class: "btn btn-danger", data: { confirm: '确认删除？' } do
     = fa_icon "user-times", class: "fa-fw"
     '
     | 删除联系人
