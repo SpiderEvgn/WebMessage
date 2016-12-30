@@ -1,2 +1,18 @@
+/ 这里直接把'message'代码放过来循环输出，因为历史消息过多，否则会造成大量的 render partial
 - messages.each do |m|
-  = render partial: 'message', locals: { m: m, c_user: c_user }
+  - if m.user.id == current_user.id
+    .panel.panel-default id="message_#{m.id}"
+      .panel-body.text-right
+        small = m.created_at
+        br
+        = m.content
+        '
+        |
+        = link_to contact_message_path(c_user, m), remote: true, method: :delete do
+          span.glyphicon.glyphicon-remove-circle
+  - else
+    .panel.panel-default
+      .panel-body
+        small = m.created_at
+        br
+        = m.content

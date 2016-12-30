@@ -6,7 +6,8 @@
           h3.panel-title
             = @contact_user.username
         h4.panel-body id="message-box" style="height: 400px; overflow-y: scroll;"
-          = render partial: 'messages', locals: { messages: @messages, c_user: @contact_user }
+          - @messages.each do |m|
+            = render partial: 'message', locals: { m: m, c_user: @contact_user }
   .row
     .col-lg-12
       = simple_form_for @message, url: contact_messages_path(@contact_user), remote: true, method: :post do |f|
