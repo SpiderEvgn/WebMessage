@@ -15,8 +15,8 @@ class User < ApplicationRecord
   # issue: 需要考虑username的大小写问题，devise默认登录方法是忽略大小写，但是创建时不同于devise默认字段email用小写保存，
   # 导致在用username添加联系人时会因为大小写混乱（忽略大小写可以登录，但是添加联系人要求严格大小写）目前设置了username
   # 的唯一性验证也是忽略大小写的，所以暂时没有逻辑漏洞
-  validates :username, presence: true, uniqueness: { case_sensitive: false }, length: { in: 6..20 }
-  validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, :multiline => true
+  validates :username, presence: true, uniqueness: true, length: { in: 6..20 }
+  validates_format_of :username, with: /^[a-z0-9_\.]*$/, :multiline => true
 
 
   def self.find_first_by_auth_conditions(warden_conditions)
@@ -91,8 +91,8 @@ class User < ApplicationRecord
     self_messages = self.messages.to_user(contact_user.id)
     cont_messages = contact_user.messages.to_user(self.id)
     if count
-      self_messages = self_messages.last(5)
-      cont_messages = cont_messages.last(5)
+      self_messages = self_messages.last(10)
+      cont_messages = cont_messages.last(10)
     end
     messages_array = []
     self_messages.each {|m| messages_array << m if m}
@@ -100,7 +100,7 @@ class User < ApplicationRecord
     # 将 array 转换成 relation 用于时间排序
     messages_ids = messages_array.map(&:id)
     all_messages = Message.includes(:user).where(id: messages_ids).order(:created_at)
-    count ? all_messages.last(5) : all_messages
+    count ? all_messages.last(10) : all_messages
   end
 
   # 将联系人用户未读消息置否

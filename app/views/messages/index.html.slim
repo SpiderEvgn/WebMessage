@@ -1,6 +1,6 @@
 .container-fluid
   .row
-    .col-lg-12
+    .col-lg-12.col-xs-12.col-sm-12
       .panel.panel-info
         .panel-heading
           h3.panel-title
@@ -9,12 +9,15 @@
           - @messages.each do |m|
             = render partial: 'message', locals: { m: m, c_user: @contact_user }
   .row
-    .col-lg-12
+    .col-lg-12.col-xs-12.col-sm-12
       = simple_form_for @message, url: contact_messages_path(@contact_user), remote: true, method: :post do |f|
         .form-inputs
           = f.input :content, label: false, placeholder: '输入要发送的消息', required: true, autofocus: true
         .form-actions
           = f.button :submit, value: "发送", class: "btn btn-success"
+          '
+          |
+          = link_to "刷新接受对方消息", contact_messages_path(@contact_user), remote: true, class: "btn btn-warning"
           '
           |
           = link_to "历史消息", contact_messages_history_path, class: "btn btn-info"

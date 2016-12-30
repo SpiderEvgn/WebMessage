@@ -13,7 +13,7 @@ cn:
               taken: "用户名已存在。"
               too_short: "用户名格式不正确！请重新输入。"
               too_long: "用户名格式不正确！请重新输入。"
-              invalid: "用户名不能带有'@'符号！请重新输入。"
+              invalid: "用户名格式有误！请重新输入。"
             password:
               blank: "密码不能为空！"
               too_short: "密码长度不足 6 位字符。"
