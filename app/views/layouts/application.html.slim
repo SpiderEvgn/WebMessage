@@ -27,10 +27,17 @@ html
                 span.caret
               ul.dropdown-menu.dropdown-menu-left
                 li
-                  = link_to '前往联系人列表', contacts_path
+                  = link_to contacts_path do
+                    = fa_icon "users", class: "fa-fw"
+                    '
+                    | 前往联系人列表
                 li.divider
                 li
-                  = link_to '注 销', destroy_user_session_path, method: :delete
+                  = link_to destroy_user_session_path, method: :delete do
+                    = fa_icon "sign-out", class: "fa-fw"
+                    '
+                    | 注 销
+                  end
 
     - if notice
       .notice.alert.alert-success

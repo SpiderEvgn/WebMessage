@@ -4,6 +4,9 @@
       .panel.panel-info
         .panel-heading
           h3.panel-title
+            = fa_icon "user", class: "fa-fw"
+            '
+            |
             = @contact_user.username
         h4.panel-body id="message-box" style="height: 400px; overflow-y: scroll;"
           - @messages.each do |m|
@@ -17,10 +20,16 @@
           = f.button :submit, value: "发送", class: "btn btn-success"
           '
           |
-          = link_to "刷新接受对方消息", contact_messages_path(@contact_user), remote: true, class: "btn btn-warning"
+          = link_to contact_messages_path(@contact_user), remote: true, class: "btn btn-warning" do
+            = fa_icon "refresh", class: "fa-fw"
+            '
+            | 刷新接受对方消息
           '
           |
-          = link_to "历史消息", contact_messages_history_path, class: "btn btn-info"
+          = link_to contact_messages_history_path, class: "btn btn-info" do
+            = fa_icon "history", class: "fa-fw"
+            '
+            | 历史消息
       end
 
 javascript:

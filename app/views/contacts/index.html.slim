@@ -10,6 +10,9 @@ table.table.table-striped.table-hover
   tbody id="contacts_table"
     - @contact_users.each do |contact_user|
       = render partial: 'contact', locals: { contact: contact_user }
-= link_to "新建联系人", "#", class: "btn btn-primary", data: { toggle: "modal", target: "#new_contact_modal"}
+= link_to "#", class: "btn btn-primary", data: { toggle: "modal", target: "#new_contact_modal"} do
+  = fa_icon "user-plus", class: "fa-fw"
+  '
+  | 新建联系人
 
 = render 'modal'
