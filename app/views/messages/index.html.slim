@@ -1,13 +1,17 @@
 .container-fluid
   .row
     .col-lg-12.col-xs-12.col-sm-12
-      .panel.panel-info
+      .panel.panel-primary
         .panel-heading
           h3.panel-title
             = fa_icon "user", class: "fa-fw"
             '
             |
             = @contact_user.username
+            '
+            | -
+            '
+            | 在线聊天
         h4.panel-body id="message-box" style="height: 400px; overflow-y: scroll;"
           - @messages.each do |m|
             = render partial: 'message', locals: { m: m, c_user: @contact_user }

@@ -1,15 +1,16 @@
 / 因为历史消息过多，这里直接把'message'代码贴过来循环输出，否则会造成大量的 render partial
 - messages.each do |m|
   - if m.user.id == current_user.id
-    .panel.panel-default id="message_#{m.id}"
+    .panel.panel-info id="message_#{m.id}"
       .panel-body.text-right
         small = m.created_at
         br
-        = m.content
-        '
-        |
-        = link_to contact_message_path(c_user, m), remote: true, method: :delete do
-          = fa_icon "times-circle", class: "fa-fw"
+        span style="color: #003366;"
+          = m.content
+          '
+          |
+          = link_to contact_message_path(c_user, m), remote: true, method: :delete do
+            = fa_icon "times-circle", class: "fa-fw"
   - else
     .panel.panel-default
       .panel-body

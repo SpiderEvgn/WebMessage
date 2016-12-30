@@ -1,10 +1,17 @@
 .container-fluid
   .row
     .col-lg-12.col-xs-12.col-sm-12
-      .panel.panel-primary
+      .panel.panel-info
         .panel-heading
           h3.panel-title
+            = fa_icon "user", class: "fa-fw"
+            '
+            |
             = @contact_user.username
+            '
+            | -
+            '
+            | 历史消息
         h4.panel-body id="message-box" style="height: 450px; overflow-y: scroll;"
           = render partial: 'messages', locals: { messages: @messages, c_user: @contact_user }
         .panel-footer
