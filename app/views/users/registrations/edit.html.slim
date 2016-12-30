@@ -1,0 +1,17 @@
+h3 注册
+= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+  = f.error_notification
+  .form-inputs
+    br
+    = f.input :email, value: "#{@current_user.email}", required: true, autofocus: true
+    = f.input :username, value: "#{@current_user.username}", required: true
+    = f.input :password, placeholder: '留空如果你不想更改密码', autocomplete: "off", required: false
+    = f.input :password_confirmation, placeholder: '重复密码', required: false
+    = f.input :current_password, placeholder: "需要你的当前密码来确认更改", required: true
+  hr
+  .form-actions
+    = f.button :submit, value: "确认", class: "btn btn-primary btn-block"
+    = link_to contacts_path, class: "btn btn-warning btn-block" do
+      = fa_icon "chevron-circle-left", class: "fa-fw"
+      '
+      | 返 回 
