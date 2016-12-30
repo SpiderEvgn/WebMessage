@@ -8,7 +8,10 @@
         h4.panel-body id="message-box" style="height: 450px; overflow-y: scroll;"
           = render partial: 'messages', locals: { messages: @messages, c_user: @contact_user }
         .panel-footer
-          = link_to "返回", contact_messages_path(@contact_user), class: "btn btn-warning"
+          = link_to contact_messages_path(@contact_user), class: "btn btn-warning" do
+            = fa_icon "chevron-circle-left", class: "fa-fw"
+            '
+            | 返 回       
 
 javascript:
   document.getElementById('message-box').scrollTop = document.getElementById('message-box').scrollHeight;
