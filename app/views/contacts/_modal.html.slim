@@ -9,6 +9,12 @@
             = f.input :contact_id, label: false, placeholder: '请输入 邮箱 / 用户名 添加联系人', required: true, autofocus: true
           hr
           .form-actions
-            = f.button :submit, value: "添加", class: "btn btn-primary btn-block"
-            = link_to "返回", "#", class: "btn btn-warning btn-block", data: { dismiss: "modal" }   
+            = button_tag(type: :submit, class: "btn btn-primary btn-block") do
+              = fa_icon "user-plus", class: "fa-fw"
+              '
+              | 添 加
+            = link_to "#", class: "btn btn-warning btn-block", data: { dismiss: "modal" } do
+              = fa_icon "chevron-circle-left", class: "fa-fw"
+              '
+              | 返 回 
         end

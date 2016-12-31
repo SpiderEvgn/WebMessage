@@ -7,5 +7,11 @@ h3 登录
     = f.input :password, label: false, placeholder: '密码', required: true
   hr
   .form-actions
-    = f.button :submit, value: "登录", class: "btn btn-primary btn-block"
-    = link_to "没有账号？", new_user_registration_path, class: "btn btn-danger btn-block"
+    = button_tag(type: :submit, class: "btn btn-primary btn-block") do
+      = fa_icon "sign-in", class: "fa-fw"
+      '
+      | 登 录
+    = link_to new_user_registration_path, class: "btn btn-danger btn-block"
+      = fa_icon "pencil", class: "fa-fw"
+      '
+      | 注 册

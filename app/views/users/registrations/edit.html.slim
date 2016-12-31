@@ -10,7 +10,10 @@ h3 注册
     = f.input :current_password, placeholder: "需要你的当前密码来确认更改", required: true
   hr
   .form-actions
-    = f.button :submit, value: "确认", class: "btn btn-primary btn-block"
+    = button_tag(type: :submit, class: "btn btn-primary btn-block") do
+      = fa_icon "check-circle-o", class: "fa-fw"
+      '
+      | 确 认
     = link_to contacts_path, class: "btn btn-warning btn-block" do
       = fa_icon "chevron-circle-left", class: "fa-fw"
       '

@@ -20,7 +20,10 @@
         .form-inputs
           = f.input :content, label: false, placeholder: '输入要发送的消息', required: true, autofocus: true
         .form-actions
-          = f.button :submit, value: "发送", class: "btn btn-success"
+          = button_tag(type: :submit, class: "btn btn-success") do
+            = fa_icon "send", class: "fa-fw"
+            '
+            | 发 送
           '
           |
           = link_to contact_messages_path(@contact_user), remote: true, class: "btn btn-primary" do
