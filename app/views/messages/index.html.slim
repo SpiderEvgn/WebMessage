@@ -1,7 +1,7 @@
 .container-fluid
   .row
     .col-lg-12.col-xs-12.col-sm-12
-      .panel.panel-primary id="chat-room" data-current-user-id="#{current_user.id}"
+      .panel.panel-primary id="chat-room" data-current-user-id="#{current_user.id}" data-contact-user-id="#{@contact_user.id}"
         .panel-heading
           h3.panel-title
             = fa_icon "user", class: "fa-fw"
@@ -42,7 +42,3 @@
               '
               | 历史消息
       end
-
-javascript:
-  var mbox = document.getElementById('message-box');
-  mbox.scrollTop = mbox.scrollHeight;

@@ -7,10 +7,12 @@ class Message < ApplicationRecord
   scope :to_user, ->(user_id){ where(to_user_id: user_id) }
 
   # 新的消息创建后发布到对应联系人channel，双方一起更新聊天消息
+  # 不会 coffee 的语法，目前只能很笨的在后台拼接 html，将两种显示方式一起发送，前端判断是否是发送者再选择渲染
   after_create_commit { ActionCable.server.broadcast(generate_channel_name(self), 
                                                      messageMy: render_messageMy(self), 
                                                      messageYou: render_messageYou(self),
-                                                     receiver: self.to_user_id
+                                                     receiver: self.to_user_id,
+                                                     message_id: self.id
                                                      ) }
   private
 

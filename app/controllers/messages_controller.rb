@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
   before_action :set_contact_user, only: [:index, :create, :history]
-  before_action :set_message, only: :destroy
+  before_action :set_message, only: [:destroy, :update]
 
   def index
     # 聊天框初始只显示最后 10 次记录
@@ -32,6 +32,19 @@ class MessagesController < ApplicationController
         format.js { head :no_content }
       end
     end
+  end
+
+  def update
+    @message.update(is_read: true)
+    # respond_to do |format|
+    #   if @gmessage.update(is_read: true)
+    #     format.html { redirect_to @group, notice: 'Group was successfully updated.' }
+    #     format.json { render :show, status: :ok, location: @group }
+    #   else
+    #     format.html { render :edit }
+    #     format.json { render json: @group.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   def destroy

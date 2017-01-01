@@ -1,3 +1,4 @@
+/ 原来是在前端判断消息输出格式，后来用了 actioncable 实现 websocket 实时接收功能，因为不熟悉 coffee 语法，所以放到了后台直接把消息包成 html 再传到前端，这样 coffee 就只用判断用哪个模版了
 / - if m.user.id == current_user.id
 .panel.panel-info id="message_#{m.id}"
   .panel-body.text-right
