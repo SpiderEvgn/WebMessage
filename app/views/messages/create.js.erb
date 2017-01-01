@@ -1,8 +1,8 @@
-// <% if @message.id %>
+<% if @message.id %>
   // $('#message-box').append("<%= j render(partial: 'message', locals: { m: @message }) %>");
   // $('#message-box').scrollTop($('#message-box').height());
   // $('#message_content').val("");
-// <% else %>
+<% else %>
 // TOTO： 增加更友好的错误提示
-//   alert("消息不可为空！");
-// <% end %>
+  alert("消息不可为空！");
+<% end %>

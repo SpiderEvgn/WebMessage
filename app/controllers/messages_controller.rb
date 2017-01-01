@@ -28,8 +28,8 @@ class MessagesController < ApplicationController
         @contact_user.add_contact_when_message(current_user.id)
         format.js { head :no_content }
       else
-        # bug: 消息为空时的 js 处理有问题，下一个 commit 解决
-        format.js { head :no_content }
+        # TODO: 消息为空时的处理有点丑，暂且如此，先去处理别的优先级高的功能
+        format.js
       end
     end
   end

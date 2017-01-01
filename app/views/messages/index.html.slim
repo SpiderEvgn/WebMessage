@@ -1,7 +1,7 @@
 .container-fluid
   .row
     .col-lg-12.col-xs-12.col-sm-12
-      .panel.panel-primary id="chat-room" data-current-user-id="#{current_user.id}" data-contact-user-id="#{@contact_user.id}"
+      .panel.panel-primary
         .panel-heading
           h3.panel-title
             = fa_icon "user", class: "fa-fw"
@@ -12,7 +12,7 @@
             | -
             '
             | 在线聊天
-        h4.panel-body id="message-box" data-chat-user-ids="#{current_user.id}-#{@contact_user.id}" style="height: 400px; overflow-y: scroll;"
+        h4.panel-body id="message-box" data-current-user-id="#{current_user.id}" data-contact-user-id="#{@contact_user.id}" style="height: 400px; overflow-y: scroll;"
           = render partial: 'messages', locals: { messages: @messages }
   .row
     .col-lg-12.col-xs-12.col-sm-12

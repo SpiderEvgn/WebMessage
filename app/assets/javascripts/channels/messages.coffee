@@ -1,7 +1,7 @@
 jQuery(document).on 'turbolinks:load', ->
   message_box = $('#message-box')
-  chat_room = $('#chat-room')
 
+  # 当页面出现聊天框时，也就是进入了聊天界面
   if $('#message-box').length > 0
 
     messages_to_bottom = -> message_box.scrollTop(message_box.prop("scrollHeight"))
@@ -9,7 +9,7 @@ jQuery(document).on 'turbolinks:load', ->
 
     App.global_chat = App.cable.subscriptions.create {
         channel: "MessagesChannel"
-        chat_user_ids: message_box.data('chat-user-ids')
+        chat_user_ids: "#{message_box.data('current-user-id')}-#{message_box.data('contact-user-id')}"
       },
       connected: ->
         # Called when the subscription is ready for use on the server
@@ -18,10 +18,10 @@ jQuery(document).on 'turbolinks:load', ->
         # Called when the subscription has been terminated by the server
 
       received: (data) ->
-        if chat_room.data('current-user-id') == data['receiver']
+        if message_box.data('current-user-id') == data['receiver']
           message_box.append data['messageYou']
           # 把新消息置为已读
-          $.ajax "/contacts/#{chat_room.data('contact-user-id')}/messages/#{data['message_id']}", type: "PATCH"
+          $.ajax "/contacts/#{message_box.data('contact-user-id')}/messages/#{data['message_id']}", type: "PATCH"
         else
           message_box.append data['messageMy']
 
