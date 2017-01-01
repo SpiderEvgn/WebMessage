@@ -35,16 +35,10 @@ class MessagesController < ApplicationController
   end
 
   def update
-    @message.update(is_read: true)
-    # respond_to do |format|
-    #   if @gmessage.update(is_read: true)
-    #     format.html { redirect_to @group, notice: 'Group was successfully updated.' }
-    #     format.json { render :show, status: :ok, location: @group }
-    #   else
-    #     format.html { render :edit }
-    #     format.json { render json: @group.errors, status: :unprocessable_entity }
-    #   end
-    # end
+    respond_to do |format|
+      @message.update(is_read: true)
+      format.js { head :no_content }
+    end
   end
 
   def destroy

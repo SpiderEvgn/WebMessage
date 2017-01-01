@@ -3,6 +3,7 @@ jQuery(document).on 'turbolinks:load', ->
   chat_room = $('#chat-room')
 
   if $('#message-box').length > 0
+
     messages_to_bottom = -> message_box.scrollTop(message_box.prop("scrollHeight"))
     messages_to_bottom()
 
@@ -20,7 +21,7 @@ jQuery(document).on 'turbolinks:load', ->
         if chat_room.data('current-user-id') == data['receiver']
           message_box.append data['messageYou']
           # 把新消息置为已读
-          $.patch "/contacts/#{chat_room.data('contact-user-id')}/messages/#{data['message_id']}"
+          $.ajax "/contacts/#{chat_room.data('contact-user-id')}/messages/#{data['message_id']}", type: "PATCH"
         else
           message_box.append data['messageMy']
 
