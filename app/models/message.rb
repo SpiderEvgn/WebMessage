@@ -39,7 +39,7 @@ class Message < ApplicationRecord
   # 更好的方式是 broadcast 只是传送一个信号，由前端完成对未读消息的自加操作（不知道coffee如何实现，有空研究），这样就避免了多余的读取数据库和计算
   def render_new_badge(message)
     new_count = message.user.messages.where(to_user_id: message.to_user_id).not_read.count
-    "<span class='badge' id='badge_#{message.user.id} style='color:red'>#{new_count}</span>"
+    "<span class='badge' id='badge_#{message.user.id}' style='color:red'>#{new_count}</span>"
   end
 
 end

@@ -25,6 +25,7 @@ jQuery(document).on 'turbolinks:load', ->
         else
           message_box.append data['messageMy']
 
+        $('#message_content').val("");
         messages_to_bottom()
 
       # TODO: 可以直接通过“发送”按钮的 js 实现，因为原本是用remote: true的方式提交 js 请求，这里就先不改了，有空再优化
