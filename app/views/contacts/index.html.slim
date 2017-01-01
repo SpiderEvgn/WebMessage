@@ -7,7 +7,7 @@ table.table.table-striped.table-hover
       th 添加时间
       th 聊天／未读消息
 
-  tbody id="contacts_table"
+  tbody id="contacts_list" data-current-user-id="#{current_user.id}"
     - @contact_users.each do |contact_user|
       = render partial: 'contact', locals: { contact: contact_user }
 = link_to "#", class: "btn btn-primary", data: { toggle: "modal", target: "#new_contact_modal"} do

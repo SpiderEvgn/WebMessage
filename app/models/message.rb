@@ -13,7 +13,12 @@ class Message < ApplicationRecord
                                                      messageYou: render_messageYou(self),
                                                      receiver: self.to_user_id,
                                                      message_id: self.id
-                                                     ) }
+                                                     )
+                        ActionCable.server.broadcast("contacts_list_#{self.to_user_id}_channel",
+                                                     contact_id: self.user.id,
+                                                     new_badge: render_new_badge(self)
+                                                     )
+                      }
   private
 
   # 拼装聊天 channel 的名字
@@ -29,6 +34,12 @@ class Message < ApplicationRecord
 
   def render_messageYou(message)
     MessagesController.render partial: 'messages/messageYou', locals: { m: message }
+  end
+
+  # 更好的方式是 broadcast 只是传送一个信号，由前端完成对未读消息的自加操作（不知道coffee如何实现，有空研究），这样就避免了多余的读取数据库和计算
+  def render_new_badge(message)
+    new_count = message.user.messages.where(to_user_id: message.to_user_id).not_read.count
+    "<span class='badge' id='badge_#{message.user.id}'>#{new_count}</span>"
   end
 
 end

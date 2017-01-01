@@ -9,7 +9,7 @@ tr id="contact_user_#{contact.id}"
     | 聊天
     '
     |
-    span.badge
+    span.badge id="badge_#{contact.id}"
       = not_read_messages(contact)
   td = link_to contact_path(contact), remote: true, method: :delete, class: "btn btn-danger", data: { confirm: '确认删除？' } do
     = fa_icon "user-times", class: "fa-fw"

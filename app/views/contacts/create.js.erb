@@ -1,6 +1,6 @@
 <% if @new_contact %>
   $('#new_contact_modal').modal('hide');
-  $('#contacts_table').append("<%= j render(partial: 'contact', locals: { contact: @new_contact }) %>");
+  $('#contacts_list').append("<%= j render(partial: 'contact', locals: { contact: @new_contact }) %>");
 <% else %>
 // TOTO： 增加更友好的错误提示
   alert("输入有误！添加失败。");
