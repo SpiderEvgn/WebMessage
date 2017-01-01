@@ -7,7 +7,7 @@ class Message < ApplicationRecord
   scope :to_user, ->(user_id){ where(to_user_id: user_id) }
 
   # 新的消息创建后发布到对应联系人channel，双方一起更新聊天消息
-  after_create_commit { ActionCable.server.broadcast("chat_rooms_#{self.user.id}_channel", message: render_message(self)) }
+  after_create_commit { ActionCable.server.broadcast("chat_rooms_room001_channel", message: render_message(self)) }
   private
 
   # 拼装显示在聊天界面的新弹出消息
