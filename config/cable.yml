@@ -6,4 +6,4 @@ test:
 
 production:
   adapter: redis
-  url: ENV["REDISCLOUD_URL"]
+  url: redis://rediscloud:oBMwWdQc84gBUQcg@redis-16210.c9.us-east-1-4.ec2.cloud.redislabs.com:16210
