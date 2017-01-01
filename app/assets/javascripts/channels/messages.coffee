@@ -46,7 +46,7 @@ jQuery(document).on 'turbolinks:load', ->
         # Called when the subscription has been terminated by the server
 
       received: (data) ->
-        $("#badge_#{data['contact_id']}").html(data['new_badge'])
+        $("#badge_#{data['contact_id']}").replaceWith(data['new_badge'])
 
 
 
