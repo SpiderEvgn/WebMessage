@@ -1,8 +1,0 @@
-<% if @message.id %>
-  $('#message-box').append("<%= j render(partial: 'message', locals: { m: @message, c_user: @contact_user }) %>");
-  $('#message-box').scrollTop($('#message-box').height());
-  $('#message_content').val("");
-<% else %>
-// TOTO： 增加更友好的错误提示
-  alert("消息不可为空！");
-<% end %>

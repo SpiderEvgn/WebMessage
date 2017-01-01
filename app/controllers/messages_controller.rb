@@ -26,10 +26,10 @@ class MessagesController < ApplicationController
       if @message.save
         # 如果自己不是对方联系人好友，则自动添加到对方联系人列表
         @contact_user.add_contact_when_message(current_user.id)
-        format.js
+        format.js { head :no_content }
       else
         # bug: 消息为空时的 js 处理有问题，下一个 commit 解决
-        format.js
+        format.js { head :no_content }
       end
     end
   end

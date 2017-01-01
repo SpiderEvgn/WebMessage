@@ -13,7 +13,7 @@
             '
             | 历史消息
         h4.panel-body id="message-box" style="height: 450px; overflow-y: scroll;"
-          = render partial: 'messages', locals: { messages: @messages, c_user: @contact_user }
+          = render partial: 'messages', locals: { messages: @messages }
         .panel-footer
           = link_to contact_messages_path(@contact_user), class: "btn btn-warning" do
             = fa_icon "chevron-circle-left", class: "fa-fw"

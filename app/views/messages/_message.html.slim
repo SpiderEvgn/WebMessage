@@ -1,17 +1,17 @@
-- if m.user.id == current_user.id
-  .panel.panel-info id="message_#{m.id}"
-    .panel-body.text-right
-      small = m.created_at
-      br
-      span style="color: #003366;"
-        = m.content
-        '
-        |
-        = link_to contact_message_path(c_user, m), remote: true, method: :delete do
-          = fa_icon "times-circle", class: "fa-fw"
-- else
-  .panel.panel-default
-    .panel-body
-      small = m.created_at
-      br
+/ - if m.user.id == current_user.id
+.panel.panel-info id="message_#{m.id}"
+  .panel-body.text-right
+    small = m.created_at
+    br
+    span style="color: #003366;"
       = m.content
+      '
+      |
+      = link_to contact_message_path(m.to_user_id, m), remote: true, method: :delete do
+        = fa_icon "times-circle", class: "fa-fw"
+/ - else
+/   .panel.panel-default
+/     .panel-body
+/       small = m.created_at
+/       br
+/       = m.content
