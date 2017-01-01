@@ -1,5 +1,7 @@
 jQuery(document).on 'turbolinks:load', ->
   messages = $('#message-box')
+  chat_room = $('#chat-room')
+
   if $('#message-box').length > 0
     messages_to_bottom = -> messages.scrollTop(messages.prop("scrollHeight"))
 
@@ -7,8 +9,7 @@ jQuery(document).on 'turbolinks:load', ->
 
     App.global_chat = App.cable.subscriptions.create {
         channel: "MessagesChannel"
-        chat_room_id: "room001"
-        # chat_room_id: messages.data('chat-room-id')
+        chat_user_ids: messages.data('chat-user-ids')
       },
       connected: ->
         # Called when the subscription is ready for use on the server
@@ -17,9 +18,12 @@ jQuery(document).on 'turbolinks:load', ->
         # Called when the subscription has been terminated by the server
 
       received: (data) ->
-        messages.append data['message']
+        if chat_room.data('current-user-id') == data['receiver']
+          messages.append data['messageYou']
+        else
+          messages.append data['messageMy']
+
         messages_to_bottom()
-        # alert(data['message'])
 
 
       # send_message: (message, chat_room_id) ->

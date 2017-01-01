@@ -2,7 +2,9 @@
 class MessagesChannel < ApplicationCable::Channel
   # Called when the consumer has successfully become a subscriber of this channel.
   def subscribed
-    stream_from "chat_rooms_#{params['chat_room_id']}_channel"
+    # 按聊天双方的 user.id “小-大” 的模式建立 channel 的唯一名字
+    user_ids = params['chat_user_ids'].split('-').map(&:to_i)
+    stream_from "chat_room_#{user_ids.min}-#{user_ids.max}_channel"
   end
 
   def unsubscribed

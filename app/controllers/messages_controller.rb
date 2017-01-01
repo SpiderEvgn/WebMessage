@@ -1,5 +1,5 @@
 class MessagesController < ApplicationController
-  before_action :set_contact_id, only: [:index, :create, :history]
+  before_action :set_contact_user, only: [:index, :create, :history]
   before_action :set_message, only: :destroy
 
   def index
@@ -43,7 +43,7 @@ class MessagesController < ApplicationController
 
   private
   
-  def set_contact_id
+  def set_contact_user
     @contact_user = User.find(params[:contact_id])
   end
 
