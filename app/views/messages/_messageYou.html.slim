@@ -1,5 +1,11 @@
 .panel.panel-default
   .panel-body
-    small = m.created_at
+    small
+      = m.user.username
+      '
+      | |
+      '
+      |
+      = m.created_at
     br
     = m.content
