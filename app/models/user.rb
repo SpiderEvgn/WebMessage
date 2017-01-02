@@ -72,20 +72,6 @@ class User < ApplicationRecord
     end
   end
 
-  def add_contact_when_message(contact_id)
-    # 判断自己是否是对方联系人的好友，若否，则自动将自己添加到对方联系人列表
-    unless self.contacts.map(&:contact_id).include?(contact_id)
-      # 先判断自己是否曾经是对方的好友
-      contacts_deleted = self.contacts.only_deleted
-      if contacts_deleted && contacts_deleted.map(&:contact_id).include?(contact_id)
-        d_contact = Contact.only_deleted.find_by(user_id: self.id, contact_id: contact_id)
-        Contact.restore(d_contact.id)
-      else
-        self.contacts.create!(contact_id: contact_id)
-      end
-    end
-  end
-
   # 获取当前用户与联系人聊天记录
   def get_all_messages(contact_user, count=nil)
     self_messages = self.messages.to_user(contact_user.id)

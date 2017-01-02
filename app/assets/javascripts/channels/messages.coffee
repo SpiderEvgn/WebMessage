@@ -47,8 +47,11 @@ jQuery(document).on 'turbolinks:load', ->
         # Called when the subscription has been terminated by the server
 
       received: (data) ->
-        $("#badge_#{data['contact_id']}").replaceWith(data['new_badge'])
-
+        # 已经是联系人的话就更新未读数；否则就更新联系人列表添加联系人
+        if data['new_contact'] == "is_contact"
+          $("#badge_#{data['contact_id']}").replaceWith(data['new_badge'])
+        else
+          contacts_list.append data['new_contact']
 
 
 

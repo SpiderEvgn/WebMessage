@@ -24,8 +24,7 @@ class MessagesController < ApplicationController
     @message.update_attributes(to_user_id: params[:contact_id])
     respond_to do |format|
       if @message.save
-        # 如果自己不是对方联系人好友，则自动添加到对方联系人列表
-        @contact_user.add_contact_when_message(current_user.id)
+        # 保存成功的话，就执行 after_create_commit，不返回任何内容，交由actioncable处理
         format.js { head :no_content }
       else
         # TODO: 消息为空时的处理有点丑，暂且如此，先去处理别的优先级高的功能
