@@ -9,10 +9,6 @@ class MessagesController < ApplicationController
     @contact_user.clear_messages_unread_count(current_user.id)
     
     @message = current_user.messages.new
-    respond_to do |format|
-      format.html
-      format.js
-    end
   end
 
   def history
@@ -43,7 +39,8 @@ class MessagesController < ApplicationController
   def destroy
     @message.destroy
     respond_to do |format|
-      format.js
+      # 页面的消息清除动作交给 actioncable 执行
+      format.js { head :no_content }
     end
   end
 
