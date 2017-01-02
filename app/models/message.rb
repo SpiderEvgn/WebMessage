@@ -8,7 +8,7 @@ class Message < ApplicationRecord
 
   after_create_commit :sync_update_message, :sync_update_contacts_list
   after_destroy_commit :sync_clear_contact_message   
-                   
+
   private
 
   # 新的消息创建后发布到对应联系人channel，双方一起更新聊天消息
@@ -32,7 +32,7 @@ class Message < ApplicationRecord
 
   # 发送消息时更新对方联系人列表的对应未读消息数
   # 如果消息发送者不是接受者的联系人，则自动更新接受者的联系人列表
-  def sync_udpate_contacts_list
+  def sync_update_contacts_list
     ActionCable.server.broadcast("contacts_list_#{self.to_user_id}_channel",
                                  contact_id:  self.user.id,
                                  new_badge:   render_new_badge(self),
