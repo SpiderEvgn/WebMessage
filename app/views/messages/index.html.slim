@@ -26,12 +26,6 @@
             | 发 送
           '
           |
-          = link_to contact_messages_path(@contact_user), remote: true, class: "btn btn-primary" do
-            = fa_icon "refresh", class: "fa-fw"
-            '
-            | 刷新接受对方消息
-          '
-          |
           = link_to contacts_path, class: "btn btn-warning" do
             = fa_icon "chevron-circle-left", class: "fa-fw"
             '
