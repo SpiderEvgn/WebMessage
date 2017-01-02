@@ -25,8 +25,8 @@ class Message < ApplicationRecord
   # 删除自己消息的同时将对方联系人聊天框中的相应消息清除
   def sync_clear_contact_message
     ActionCable.server.broadcast(generate_channel_name(self), 
-                                 status:       "delete",
-                                 clearMessage: "$('#message_#{self.id}').fadeOut()"
+                                 status:     "delete",
+                                 message_id: self.id
                                  )
   end
 

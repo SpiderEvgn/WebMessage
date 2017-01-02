@@ -19,7 +19,7 @@ jQuery(document).on 'turbolinks:load', ->
 
       received: (data) ->
         if data['status'] == 'delete'
-          data['clearMessage']
+          ("#message_#{data['message_id']}").fadeOut()
         else
           if message_box.data('current-user-id') == data['receiver']
             message_box.append data['messageYou']
