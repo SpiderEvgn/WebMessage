@@ -19,7 +19,7 @@ class Message < ApplicationRecord
                                  messageYou: render_messageYou(self),
                                  receiver:   self.to_user_id,
                                  message_id: self.id
-                                 )
+                                )
   end
 
   # 删除自己消息的同时将对方联系人聊天框中的相应消息清除
@@ -49,12 +49,6 @@ class Message < ApplicationRecord
                                  )
   end
 
-  # 拼装聊天 channel 的名字
-  def generate_channel_name(message)
-  	user_ids = [message.user.id, message.to_user_id]
-    "chat_room_#{user_ids.min}-#{user_ids.max}_channel"
-  end
-
   # 拼装显示在聊天界面的新弹出消息
   def render_messageMy(message)
     MessagesController.render partial: 'messages/messageMy', locals: { m: message }
@@ -62,6 +56,12 @@ class Message < ApplicationRecord
 
   def render_messageYou(message)
     MessagesController.render partial: 'messages/messageYou', locals: { m: message }
+  end
+
+  # 拼装聊天 channel 的名字
+  def generate_channel_name(message)
+  	user_ids = [message.user.id, message.to_user_id]
+    "chat_room_#{user_ids.min}-#{user_ids.max}_channel"
   end
 
   # 更好的方式是 broadcast 只是传送一个信号，由前端完成对未读消息的自+/-操作，这样就避免了多余的数据库读取和计算
