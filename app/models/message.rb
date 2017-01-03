@@ -73,15 +73,16 @@ class Message < ApplicationRecord
       else
         receiver.contacts.create!(contact_id: message.user.id)
       end
-      render_new_contact(message.user)
+      render_new_contact(message)
     else
       return "is_contact"
     end
   end
 
   # 拼装新加的联系人列表行
-  def render_new_contact(contact)
-    ContactsController.render partial: 'contacts/newContact', locals: { contact: contact }
+  def render_new_contact(message)
+    count = message.user.messages.to_user(message.to_user_id).not_read.count
+    ContactsController.render partial: 'contacts/newContact', locals: { contact: message.user, count: count }
   end
 
 end
