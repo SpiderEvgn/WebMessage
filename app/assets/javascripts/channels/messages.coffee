@@ -31,7 +31,7 @@ jQuery(document).on 'turbolinks:load', ->
           messages_to_bottom()
           $('#message_content').val("");
 
-  # 当页面出现联系人列表时，即进入了聊天界面
+  # 当页面出现联系人列表时，即进入了联系人列表界面
   if $('#contacts_list').length > 0
     contacts_list = $('#contacts_list')
 
@@ -46,11 +46,14 @@ jQuery(document).on 'turbolinks:load', ->
         # Called when the subscription has been terminated by the server
 
       received: (data) ->
-        # 已经是联系人的话就更新未读数；否则就更新联系人列表添加联系人
-        if data['new_contact'] == "is_contact"
+        if data['status'] == 'delete'
           $("#badge_#{data['contact_id']}").replaceWith(data['new_badge'])
         else
-          contacts_list.append data['new_contact']
+          # 已经是联系人的话就更新未读数；否则就更新联系人列表添加联系人
+          if data['new_contact'] == "is_contact"
+            $("#badge_#{data['contact_id']}").replaceWith(data['new_badge'])
+          else
+            contacts_list.append data['new_contact']
 
 
 

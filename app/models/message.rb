@@ -7,7 +7,7 @@ class Message < ApplicationRecord
   scope :to_user, ->(user_id){ where(to_user_id: user_id) }
 
   after_create_commit :sync_update_message, :sync_update_contacts_list
-  after_destroy_commit :sync_clear_contact_message   
+  after_destroy_commit :sync_clear_contact_message, :sync_update_unread_badge
 
   private
 
@@ -39,6 +39,16 @@ class Message < ApplicationRecord
                                  new_contact: add_contact_when_message(self)
                                  )
   end
+
+  # 删除信息时，同步更新联系人列表页面的未读消息
+  def sync_update_unread_badge
+    ActionCable.server.broadcast("contacts_list_#{self.to_user_id}_channel",
+                                 status:      "delete",
+                                 contact_id:  self.user.id,
+                                 new_badge:   render_new_badge(self)
+                                 )
+  end
+
   # 拼装聊天 channel 的名字
   def generate_channel_name(message)
   	user_ids = [message.user.id, message.to_user_id]
@@ -56,8 +66,12 @@ class Message < ApplicationRecord
 
   # 更好的方式是 broadcast 只是传送一个信号，由前端完成对未读消息的自加操作（不知道coffee如何实现，有空研究），这样就避免了多余的数据库读取和计算
   def render_new_badge(message)
-    new_count = message.user.messages.where(to_user_id: message.to_user_id).not_read.count
-    "<span class='badge' id='badge_#{message.user.id}' style='color:red'>#{new_count}</span>"
+    new_count = message.user.messages.to_user(message.to_user_id).not_read.count
+    if new_count == 0
+      "<span class='badge' id='badge_#{message.user.id}'>#{new_count}</span>"
+    else
+      "<span class='badge' id='badge_#{message.user.id}' style='color:red'>#{new_count}</span>"
+    end
   end
 
   # 如果消息发送者不是接受者的联系人，则自动更新接受者的联系人列表
