@@ -12,9 +12,8 @@ class User < ApplicationRecord
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, uniqueness: true, format: { with: VALID_EMAIL_REGEX }
 
-  # issue: 需要考虑username的大小写问题，devise默认登录方法是忽略大小写，但是创建时不同于devise默认字段email用小写保存，
-  # 导致在用username添加联系人时会因为大小写混乱（忽略大小写可以登录，但是添加联系人要求严格大小写）目前设置了username
-  # 的唯一性验证也是忽略大小写的，所以暂时没有逻辑漏洞
+  # issue: 需要考虑username的大小写问题，方便起见我没有hack devise controller所以用了成本最低的方式，只允许username用
+  # 小写注册，否则由于登录时忽略大小写会造成username混乱
   validates :username, presence: true, uniqueness: true, length: { in: 6..20 }
   validates_format_of :username, with: /^[a-z0-9_\.]*$/, :multiline => true
 
