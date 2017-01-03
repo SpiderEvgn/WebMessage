@@ -7,7 +7,7 @@ class UpdateMessageJob < ApplicationJob
                                  messageYou: render_messageYou(message),
                                  receiver:   message.to_user_id,
                                  message_id: message.id
-                                 )
+                                )
   end
 
   private
@@ -20,5 +20,5 @@ class UpdateMessageJob < ApplicationJob
   def render_messageYou(message)
     MessagesController.render partial: 'messages/messageYou', locals: { m: message }
   end
-  
+
 end
