@@ -9,7 +9,7 @@ tr id="contact_user_#{contact.id}"
     | 聊天
     '
     |
-    / 原本这里利用 not_read_messages_count(contact) helper 方法计算未读数，但是在 model 无法获取 devise 的 current_user，所以在后台计算好未读数再渲染这个新的newContact模版
+    / 原本这里利用 not_read_messages_count(contact) helper 方法计算未读数，但是在 model 无法获取 devise 的 current_user，所以当被动同步新增联系人的时候，在后台计算好未读数再渲染这个新的newContact模版
     span.badge id="badge_#{contact.id}" style="color:red"
       = count
   td = link_to contact_path(contact), remote: true, method: :delete, class: "btn btn-danger", data: { confirm: '确认删除？' } do
