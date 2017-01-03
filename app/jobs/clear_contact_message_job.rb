@@ -1,0 +1,3 @@
+class ClearContactMessageJob < ApplicationJob
+
+end

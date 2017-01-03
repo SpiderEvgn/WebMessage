@@ -1,0 +1,3 @@
+class UpdateUnreadBadgeJob < ApplicationJob
+
+end

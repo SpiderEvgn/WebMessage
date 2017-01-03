@@ -1,0 +1,3 @@
+class UpdateContactListJob < ApplicationJob
+
+end
