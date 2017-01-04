@@ -1,4 +1,8 @@
 jQuery(document).on 'turbolinks:load', ->
+
+  # 退出在线聊天界面时注销 channel
+  if $('#message-box').length == 0 && App.global_chat_room
+    App.global_chat_room.unsubscribe()
   
   # 当页面出现聊天框时，即进入了聊天界面
   if $('#message-box').length > 0
@@ -7,7 +11,7 @@ jQuery(document).on 'turbolinks:load', ->
     messages_to_bottom = -> message_box.scrollTop(message_box.prop("scrollHeight"))
     messages_to_bottom()
 
-    App.global_chat = App.cable.subscriptions.create {
+    App.global_chat_room = App.cable.subscriptions.create {
         channel: "MessagesChannel"
         chat_user_ids: "#{message_box.data('current-user-id')}-#{message_box.data('contact-user-id')}"
       },
@@ -35,7 +39,7 @@ jQuery(document).on 'turbolinks:load', ->
   if $('#contacts_list').length > 0
     contacts_list = $('#contacts_list')
 
-    App.global_chat = App.cable.subscriptions.create {
+    App.global_contact_list = App.cable.subscriptions.create {
         channel: "ContactsChannel"
         current_user_id: contacts_list.data('current-user-id')
       },
