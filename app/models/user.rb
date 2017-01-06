@@ -76,8 +76,8 @@ class User < ApplicationRecord
     self_messages = self.messages.to_user(contact_user.id)
     cont_messages = contact_user.messages.to_user(self.id)
     if count
-      self_messages = self_messages.last(10)
-      cont_messages = cont_messages.last(10)
+      self_messages = self_messages.last(count)
+      cont_messages = cont_messages.last(count)
     end
     messages_array = []
     self_messages.each {|m| messages_array << m if m}
@@ -85,7 +85,7 @@ class User < ApplicationRecord
     # 将 array 转换成 relation 用于时间排序
     messages_ids = messages_array.map(&:id)
     all_messages = Message.includes(:user).where(id: messages_ids).order(:created_at)
-    count ? all_messages.last(10) : all_messages
+    count ? all_messages.last(count) : all_messages
   end
 
   # 将联系人用户未读消息置否

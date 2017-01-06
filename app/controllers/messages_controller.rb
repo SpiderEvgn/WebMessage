@@ -3,7 +3,7 @@ class MessagesController < ApplicationController
   before_action :set_message, only: [:destroy, :update]
 
   def index
-    # 聊天框初始只显示最后 10 次记录
+    # 聊天框初始只显示最后 5 次记录
     @messages = current_user.get_all_messages(@contact_user, 5)
     # 进入聊天后，将此联系人用户未读消息置否
     @contact_user.clear_messages_unread_count(current_user.id)

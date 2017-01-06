@@ -1,5 +1,5 @@
 class ClearContactMessageJob < ApplicationJob
-	include ChannelRoomGenerator
+  include ChannelRoomGenerator
 
   queue_as :default
 
