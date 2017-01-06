@@ -17,20 +17,21 @@ class Message < ApplicationRecord
     UpdateMessageJob.perform_later self
   end
 
-  # 删除自己消息的同时将对方联系人聊天框中的相应消息清除
-  def sync_clear_contact_message
-    ClearContactMessageJob.perform_later self
-  end
-
   # 发送消息时更新对方联系人列表的对应未读消息数
   # 如果消息发送者不是接受者的联系人，则自动更新接受者的联系人列表
   def sync_update_contacts_list
     UpdateContactsListJob.perform_later self
   end
 
+  # ISSUE: perform_later ?
+  # 删除自己消息的同时将对方联系人聊天框中的相应消息清除
+  def sync_clear_contact_message
+    ClearContactMessageJob.perform_now self
+  end
+
   # 删除信息时，同步更新联系人列表页面的未读消息
   def sync_update_unread_badge
-    UpdateUnreadBadgeJob.perform_later self
+    UpdateUnreadBadgeJob.perform_now self
   end
 
 end
