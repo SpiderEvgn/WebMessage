@@ -3,7 +3,7 @@ services:
   db:
     image: postgres
   web:
-    build: .
+    image: registry.cn-shanghai.aliyuncs.com/aaron_dev/webmessage:latest
     command: bash -c "rm -f /app/tmp/pids/server.pid && rails s -p 3000 -b 0.0.0.0"
     volumes:
       - .:/myapp
